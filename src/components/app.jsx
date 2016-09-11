@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './styles/app.scss';
 import React from 'react';
-import Form from './form';
-import List from './list';
+import Form from '../containers/form';
+import List from '../containers/list';
 
 export default class App extends React.Component {
   render() {

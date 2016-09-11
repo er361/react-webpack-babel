@@ -2,12 +2,17 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 class list extends Component {
+    showLoadingStatus(){
+        if(this.props.issues.isLoading)
+            return <h5>Loading...</h5>
+        else
+            return null;
+    }
+
     render() {
-        console.log('from list', this.props.issues);
-        
         return (
             <div>
-                
+                {this.showLoadingStatus()}
                 <ol>
                     {this.props.issues.items.map((item, index) =>
                       <li key={index}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {loadIssues, requestIssues} from '../redux/actions';
+import {loadIssues, loadState} from '../redux/actions';
 import {connect} from 'react-redux';
 
 class Form extends React.Component {
@@ -9,9 +9,9 @@ class Form extends React.Component {
 		this.state = {username: '', repo_title: ''}
 	}
 
-	handlLoad(){
+	handelLoad(){
 		const { username, repo_title } = this.state;
-		this.props.request(username, repo_title);
+		this.props.loadState(username, repo_title);
 		this.props.load();
 	}
 
@@ -20,16 +20,16 @@ class Form extends React.Component {
 		return(
 			<div>
 				<label htmlFor="username">Имя пользователя:</label><br/>
-				<input name='username' type="text" onChange={(e) => {
+				<input name='username' value={this.state.username} type="text" onChange={(e) => {
 					this.setState({username: e.target.value.trim()})
 				}}/>
 				<br/>
 				<label htmlFor="repo_title">Название репозитория:</label><br/>
-				<input name='repo_title' type="text" onChange={(e) => {
+				<input name='repo_title' value={this.state.repo_title} type="text" onChange={(e) => {
 					this.setState({repo_title: e.target.value.trim()})
 				}}/>
 				<br/>
-				<button onClick = {this.handlLoad.bind(this)}>Загрузить issues </button>
+				<button disabled={!this.state.username || !this.state.repo_title} onClick = {this.handelLoad.bind(this)}>Загрузить issues </button>
 			</div>
 		)
 	}
@@ -37,7 +37,7 @@ class Form extends React.Component {
 
 Form.propTypes = {
 	load: React.PropTypes.func,
-	request: React.PropTypes.func
+	loadState: React.PropTypes.func
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -45,8 +45,8 @@ const mapDispatchToProps = (dispatch) => {
 		load: () => {
 			dispatch(loadIssues())
 		},
-		request: (username, repo_title) => {
-			dispatch(requestIssues(username, repo_title))
+		loadState: (username, repo_title) => {
+			dispatch(loadState(username, repo_title))
 		}
 	}
 };
