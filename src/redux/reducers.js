@@ -1,3 +1,7 @@
-/**
- * Created by Erbol on 07.09.2016.
- */
+
+import { combineReducers } from 'redux';
+import issuesReducer from './issuesReducer';
+
+export default combineReducers({
+	issues: issuesReducer
+});

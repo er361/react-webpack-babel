@@ -1,23 +1,15 @@
-import {createStore} from 'redux';
-function counter(state = 0, action) {
-	switch(action.type){
-		case 'INC':
-					return state +1;
-		case 'DESC':
-					return state -1;
-		default:
-			return state;
-	}
-}
-let store = createStore(counter);
-store.subscribe(()=>
-	console.log(store.getState())
-);
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'DESC'});
+import {createStore, applyMiddleware} from 'redux';
+import reducers from './reducers';
+import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
+
+const logger = createLogger();
+const  store = createStore(reducers, applyMiddleware(logger, thunk));
+
+// store.subscribe(()=>
+// 	console.log('from store', store.getState())
+// );
+
 export default store;
 
 
